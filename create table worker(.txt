@@ -1,0 +1,189 @@
+create table worker(
+workerid int primary key not null,
+workername char(30) not null,
+department char(30) not null,
+salary int not null,
+doj varchar(12) not null)
+
+select * from worker
+
+insert into worker values(1,'Anil','Accounts',10000,'01-01-2020')
+insert into worker values(2,'Anu', 'Admin', 11000,'01-10-2020')
+insert into worker values(3,'Anil Kumar', 'HR',5000,'03-11-2020')
+insert into worker values(4,'Anuradh', 'Marketing',12000,'11-12-2021')
+insert into worker values(5,'Anuradh Kumar','Establishment', 8000,'01-01-2020')
+insert into worker values(6,'Anoop', 'Finance',10000,'01-01-1998')
+insert into worker values(7,'Anoop Kumar', 'Stores',9000,'01-01-2001')
+insert into worker values(8,'Adarsh', 'Security',7000,'01-01-2008')
+
+select * from worker
+
+update worker set workername='anil Prasad' where workername='anil Kumar'
+
+select * from worker
+
+update worker set salary=5500 where salary<6000
+
+select * from worker
+
+select * from worker where salary=(select max(salary) from worker)
+
+select * from worker where salary=(select min(salary) from worker)
+
+select top 1* from worker where salary in (select Top 2 salary from worker order by salary desc ) order by salary
+
+select Top 1* from worker order by doj desc
+
+select Top 1* from worker order by doj 
+
+select workername,"is working in",department from worker
+
+select workername,"salary is",salary from worker
+
+select * from worker order by salary,department
+
+select * from worker order by salary desc,department asc
+
+select substring(workername,1,1) from worker
+
+select * from worker where workername Like "%s"
+
+select * from worker where workername Like "%r"
+
+select * from worker where department="Accounts"
+
+select * from worker where department="Security"
+
+select * from worker where not department="hr"
+
+select * from worker where salary>8000 and salary<12000
+
+select * from worker where salary between 8000 and 12000
+
+select distinct department from worker
+
+select count(workername) from worker
+
+select count(workername),department from worker group by department
+
+select avg(salary),department from worker group by department
+
+select count(workername),department from worker group by department having count(workername)>1
+
+TEST
+insert into worker values(9,'Adarsha', 'Security',20000,'01-01-2007')
+select * from worker
+select count(workername),department from worker group by department having count(workername)>1
+
+/* FOREIGN KEY LEKUNDA */
+
+Create table Branch
+(Branch_id int not null Primary key (Branch_Id),
+BranchName varchar(20) Not null,
+Location varchar(20) null
+)
+
+/*select * from Branch*/
+
+insert into Branch values (1,"cse","cdc101")
+insert into Branch values (2,"cse(aiml)","cdc102")
+insert into Branch values (3,"cse(ds)","cdc103")
+insert into Branch values (4,"cse(it)","cdc104")
+insert into Branch values (5,"it","cdc105")
+insert into Branch values (6,"csit","cdc106")
+
+select * from Branch
+
+create table student
+(Rollno int not null Primary key,
+name varchar(20) Not null,
+mobile varchar(20) not null,
+Branch int not null
+)
+
+/*select * from student*/
+
+insert into student values (1,"a","123",1)
+insert into student values (2,"ab","456",2)
+insert into student values (3,"abc","789",6)
+insert into student values (4,"abcd","101112",7)
+
+select * from student
+
+delete from student where branch=7
+
+select * from student
+
+/* invalid  data student table lo undi but branch table lo ledu 
+.aa data ni delete cheyali ante student and branch tables ki link undali appudu student 
+table lo invalid data in add cheyyalemu*/
+
+/* WITH FOREIGN KEY */
+
+Create table Branch
+(Branch_id int not null Primary key (Branch_Id),
+BranchName varchar(20) Not null,
+Location varchar(20) null
+)
+
+insert into Branch values (1,"cse","cdc101")
+insert into Branch values (2,"cse(aiml)","cdc102")
+insert into Branch values (3,"cse(ds)","cdc103")
+insert into Branch values (4,"cse(it)","cdc104")
+insert into Branch values (5,"it","cdc105")
+insert into Branch values (6,"csit","cdc106")
+
+select * from Branch
+
+create table myStudent
+(Rollno int not null Primary key,
+name varchar(20) Not null,
+mobile varchar(20) not null,
+Branch int not null foreign key references Branch(Branch_id) on delete cascade on  update cascade
+)
+
+insert into mystudent values (1,"a","123",1)
+insert into mystudent values (2,"ab","456",2)
+insert into mystudent values (3,"abc","789",6)
+insert into mystudent values (4,"abcd","101112",7)
+
+select * from mystudent
+
+/*ASSIGNMENT */
+
+create table branch
+(branchid int not null primary key,
+branchname varchar(20) not null,
+location varchar(20) not null
+)
+
+insert into branch values (1, "CSE", "CDC101")
+insert into branch values (2,"CSE(DS)", "CDC102")
+insert into branch values (3, "CSE(AIML)" ,"CDC103")
+insert into branch values (4, "CSE(CS)" ,"CDC104")
+insert into branch values (5, "IT","CDC105")
+
+select * from branch
+
+create table forstudents
+(rollno int not null primary key,
+name varchar(20) not null ,
+mobile varchar(20) not null,
+branch int not null foreign key references branch(branchid) on delete cascade on update cascade
+)
+
+insert into forstudents values (1,"Anil", "98456",1)
+insert into forstudents values (2,"Anu", "98456",2)
+insert into forstudents values (3,"Anoop", "98456",4)
+insert into forstudents values (4,"Anupama", "98456",5)
+insert into forstudents values (5,"Anudeep", "98456",3)
+insert into forstudents values (6,"Anuradh", "98456",4)
+insert into forstudents values (7, "AnoopKumar", "87563",7)
+
+select * from forstudents
+
+delete from branch where branchid=1
+
+select * from branch
+
+select * from forstudents
